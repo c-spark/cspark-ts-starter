@@ -31,6 +31,6 @@ jobs:
       - name: Persist build results
         uses: actions/upload-artifact@v3
         with:
-          name: '@cspark/ts-starter'
+          name: cspark-ts-starter
           path: lib
           retention-days: 1
