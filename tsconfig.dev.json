@@ -1,5 +1,12 @@
 {
-  "compilerOptions": { "types": ["node", "jest"] },
   "extends": "./tsconfig.json",
-  "include": ["test/**/*"]
+  "compilerOptions": {
+    "outDir": "lib",
+    "types": ["node", "jest"],
+    "paths": {
+      "@cspark/starter": ["./src/index"],
+      "@cspark/starter/*": ["./src/*"]
+    }
+  },
+  "include": ["test/**/*", "examples/**/*"]
 }

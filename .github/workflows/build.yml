@@ -1,12 +1,9 @@
-name: GitHub CI
+name: Build
 
 on:
-  push:
-    branches: [main]
-    paths-ignore: ['**.md', 'LICENSE']
   pull_request:
     branches: [main]
-    paths-ignore: ['**.md']
+    paths-ignore: ['**.md', 'LICENSE', '.nvmrc']
   schedule:
     - cron: '0 0 * * 0'
 

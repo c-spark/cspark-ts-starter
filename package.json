@@ -1,52 +1,51 @@
 {
-  "name": "@cspark/ts-starter",
+  "name": "@cspark/starter",
   "version": "0.0.0-PLACEHOLDER",
-  "description": "A Coherent Spark TypeScript starter template",
-  "author": "Coherent Spark <team@coherent.global>",
+  "description": "A Node.js starter template",
+  "author": "Ralph Florent",
   "homepage": "https://github.com/c-spark/cspark-ts-starter#readme",
-  "license": "MIT",
+  "license": "Apache-2.0",
   "keywords": [
-    "coherent",
-    "spark",
+    "Node.js",
     "typescript",
     "starter",
     "template"
   ],
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/c-spark/cspark-ts-starter.git"
-  },
-  "main": "./lib/index.js",
-  "types": "./lib/index.d.ts",
+  "repository": "github:c-spark/cspark-ts-starter",
+  "main": "./lib/cjs/index.js",
+  "module": "./lib/esm/index.js",
+  "types": "./lib/esm/index.d.ts",
+  "browser": "./lib/bundle.js",
   "files": [
     "lib"
   ],
   "engines": {
-    "node": ">=16.0.0"
+    "node": "^14.15.0 || >=16.0.0"
   },
   "scripts": {
     "start": "echo \">>> no start command specified\" && exit 0",
-    "format": "prettier --write \"{src,test}/**/*.ts\"",
+    "format": "prettier --write \"{src,test,examples}/**/*.ts\"",
     "lint": "eslint \"{src,test}/**/*.ts\" --fix",
     "test": "jest",
-    "build": "tsc",
-    "postbuild": "rollup -c",
+    "prebuild": "rm -rf lib",
+    "build": "tsc && rollup -c",
+    "postbuild": "echo '{\"type\":\"module\"}' > lib/esm/package.json",
+    "demo": "tsc -p tsconfig.dev.json && node lib/examples/index.js",
     "prepare": "husky install"
   },
   "lint-staged": {
     "*.ts": "eslint \"{src,test}/**/*.ts\" --cache --fix",
-    "*.{md,ts,json,yml}": "prettier --write \"{src,test}/**/*.ts\""
-  },
-  "dependencies": {
-    "tslib": "^2.6.2"
+    "*.{md,ts,json,yml}": "prettier -u --write \"{src,test,examples,docs}/**/*\""
   },
   "devDependencies": {
     "@rollup/plugin-commonjs": "^25.0.7",
-    "@rollup/plugin-eslint": "^9.0.5",
+    "@rollup/plugin-json": "^6.1.0",
     "@rollup/plugin-node-resolve": "^15.2.3",
+    "@rollup/plugin-terser": "^0.4.4",
     "@rollup/plugin-typescript": "^11.1.5",
     "@types/jest": "^29.5.1",
     "@types/node": "*",
+    "@types/node-fetch": "^2.6.11",
     "@typescript-eslint/eslint-plugin": "^7.1.0",
     "@typescript-eslint/parser": "^7.1.0",
     "eslint": "^8.57.0",
@@ -58,7 +57,21 @@
     "prettier": "^3.2.5",
     "rollup": "^4.4.0",
     "ts-jest": "^29.1.0",
-    "typescript": "^5.0.0"
+    "ts-node": "^10.9.2",
+    "tsconfig-paths": "4.2.0",
+    "typescript": "*"
+  },
+  "exports": {
+    ".": {
+      "types": "./lib/esm/index.d.ts",
+      "require": "./lib/cjs/index.js"
+    },
+    "./*": {
+      "types": "./lib/esm/*.d.ts",
+      "require": "./lib/cjs/*.js",
+      "import": "./lib/esm/index.js",
+      "default": "./lib/esm/index.js"
+    }
   },
   "jest": {
     "rootDir": "test",
@@ -71,14 +84,20 @@
       "json",
       "ts"
     ],
-    "testPathIgnorePatterns": [
-      "/node_modules/"
-    ],
     "transform": {
-      "^.+\\.(t|j)s$": "ts-jest"
+      "^.+.tsx?$": [
+        "ts-jest",
+        {
+          "tsconfig": "tsconfig.dev.json"
+        }
+      ]
+    },
+    "moduleNameMapper": {
+      "^@cspark/starter$": "<rootDir>/../src/index.ts",
+      "^@cspark/starter/(.*)$": "<rootDir>/../src/$1"
     },
     "collectCoverageFrom": [
-      "**/*.(t|j)s"
+      "**/*.ts"
     ]
   }
 }

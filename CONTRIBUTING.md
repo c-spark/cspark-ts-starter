@@ -1,10 +1,11 @@
-# How to contribute
+# How to Contribute
 
 These are a few guidelines that contributors need to follow to keep things easy.
 
 ## Getting Started
 
 - Create a branch or fork the repository
+- Check out the [Developer Guide](#developer-guide) below for setup instructions
 - Add your functionality or fix a bug
 - Ensure that your changes pass the tests
 - Only refactoring and documentation changes require no new tests.
@@ -19,3 +20,57 @@ These are a few guidelines that contributors need to follow to keep things easy.
 
 - [General GitHub documentation](http://help.github.com/)
 - [GitHub pull request documentation](http://help.github.com/send-pull-requests/)
+
+---
+
+## Developer Guide
+
+As a developer, you should be aware of the following:
+
+- Linting and formatting with `ESLint` and `Prettier`
+- Testing with `Jest`
+- CI/CD with [GitHub Actions](https://docs.github.com/en/actions/quickstart)
+
+### Code Quality
+
+[Husky](https://github.com/typicode/husky) is used to manage Git hooks,
+and both `ESLint` and `Prettier` to help enforce code quality.
+
+### Rollup
+
+[Rollup](https://rollupjs.org/guide/en/) is used to bundle the code
+for browser distribution. Located in `rollup.config.js`, the configuration is set
+to output a CommonJS, ESM and UMD bundle.
+
+### Unit Testing
+
+[Jest](https://jestjs.io/) is used for unit testing. The `jest` setup
+is located in the `jest` field of `package.json`. It only targets `*.spec.ts` files.
+Only a portion of the codebase is tested, so feel free to add more tests.
+
+### Installation and Devtools
+
+Using `yarn` as the package manager, you may run the following commands:
+
+```bash
+# install dependencies
+yarn install
+
+# lint code
+yarn lint
+
+# test code
+yarn test
+
+# build code
+yarn build
+```
+
+To run an example, you will need to follow the instructions in the
+[examples/index.ts](./examples/index.ts) file, then run the following command:
+
+```bash
+yarn demo
+```
+
+Happy coding! 🎉

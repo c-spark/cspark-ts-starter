@@ -1,8 +1,8 @@
-# @cspark/ts-starter
+# @cspark/starter
 
 ## Description
 
-The Coherent Spark TypeScript starter repository.
+The Node.js starter repository.
 
 ## Features
 
